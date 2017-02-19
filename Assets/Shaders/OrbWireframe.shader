@@ -103,6 +103,8 @@ Shader "Custom/OrbShader"
 		_NoiseOffset("Noise Offset", Range(0, 10)) = 0
 		_NoiseMagnitude("Noise Magnitude", Range(0, 10)) = 0.5
 		_BaseRadius("Base Radius", Range(0, 10)) = 10
+		_RadiusCurve("Radius Curve", Range(-90, 90)) = 0
+		_OrbRotation("Orb Rotation", vector) = (0, 0, 0, 1)
 	}
 
 		SubShader
