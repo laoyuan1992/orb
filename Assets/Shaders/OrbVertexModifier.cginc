@@ -75,4 +75,5 @@ void orb_vert(inout appdata_full v) {
 	v.vertex.xyz = mul(v.vertex.xyz, rot);
 	v.normal.xyz = mul(v.normal.xyz, rot);
 	v.tangent.xyz = mul(v.tangent.xyz, rot);
+	v.texcoord.xy = float2(v.vertex.x / len / 2 - 0.5, v.vertex.y / len / 2 - 0.5);
 }

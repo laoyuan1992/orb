@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Orb : MonoBehaviour {
 
-	public Light light;
-
-	[Range(0, 5)]
-	public float speed = 1f;
+	public Light _light;
 
 	public float minFreq = 0.31f;
 	public float maxFreq = 6f;
@@ -34,7 +32,7 @@ public class Orb : MonoBehaviour {
 	private float offset = 0f;
 	private Material mat;
 
-	private float freq;
+	public float freq;
 
 	private Color lightColor;
 
@@ -48,21 +46,21 @@ public class Orb : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		offset += speed * Time.deltaTime;
-		freq = (minFreq + maxFreq) / 2 - Mathf.Cos(Time.time * 2 * Mathf.PI / freqPeriod) * (maxFreq - minFreq) / 2;
-		float curve = 90 * Mathf.Sin(Time.time * 2 * Mathf.PI / curvePeriod);
-//		mat.SetFloat("_NoiseOffset", offset);
+//		offset += speed * Time.deltaTime;
+//		freq = (minFreq + maxFreq) / 2 - Mathf.Cos(Time.time * 2 * Mathf.PI / freqPeriod) * (maxFreq - minFreq) / 2;
+//		float curve = 90 * Mathf.Sin(Time.time * 2 * Mathf.PI / curvePeriod);
+		mat.SetFloat("_NoiseOffset", offset);
 		mat.SetFloat("_NoiseFrequency", freq);
 //		mat.SetFloat("_RadiusCurve", curve);
 
 
-		lightHue = Mathf.Repeat(Time.time / lightHuePeriod, 1.0f);
+//		lightHue = Mathf.Repeat(Time.time / lightHuePeriod, 1.0f);
 		lightColor = Color.HSVToRGB(lightHue, lightSat, lightBright);
-		light.color = lightColor;
+		_light.color = lightColor;
 		mat.SetColor("_V_WIRE_Color", lightColor);
 
-		rotationY = maxRotationSpeed * Mathf.Sin(Time.time * 2 * Mathf.PI / rotationPeriod);
-		rotationX = maxRotationSpeed * Mathf.Cos(Time.time * 2 * Mathf.PI / rotationPeriod);
+//		rotationY = maxRotationSpeed * Mathf.Sin(Time.time * 2 * Mathf.PI / rotationPeriod);
+//		rotationX = maxRotationSpeed * Mathf.Cos(Time.time * 2 * Mathf.PI / rotationPeriod);
 		orbRotation = Quaternion.Euler(new Vector3(rotationX, rotationY, rotationZ) * Time.deltaTime) * orbRotation;
 
 		mat.SetVector("_OrbRotation", new Vector4(orbRotation.x, orbRotation.y, orbRotation.z, orbRotation.w));

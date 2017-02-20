@@ -240,13 +240,14 @@ Shader "Custom/OrbShader"
 	v2f_surf vert_surf(appdata_full v) {
 		v2f_surf o;
 		UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
+
+		orb_vert(v);
+
 		Input customInputData;
 		vert(v, customInputData);
 		o.custompack0.xyzw = customInputData.texcoord;
 		o.custompack1.xyzw = customInputData.texcoord1;
 		o.custompack2.xyzw = customInputData.mass;
-
-		orb_vert(v);
 
 		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 		float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
@@ -486,13 +487,14 @@ Shader "Custom/OrbShader"
 	v2f_surf vert_surf(appdata_full v) {
 		v2f_surf o;
 		UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
+
+		orb_vert(v);
+
 		Input customInputData;
 		vert(v, customInputData);
 		o.custompack0.xyzw = customInputData.texcoord;
 		o.custompack1.xyzw = customInputData.texcoord1;
 		o.custompack2.xyzw = customInputData.mass;
-
-		orb_vert(v);
 
 		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 		float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
@@ -684,13 +686,14 @@ Shader "Custom/OrbShader"
 	v2f_surf vert_surf(appdata_full v) {
 		v2f_surf o;
 		UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
+
+		orb_vert(v);
+
 		Input customInputData;
 		vert(v, customInputData);
 		o.custompack0.xyzw = customInputData.texcoord;
 		o.custompack1.xyzw = customInputData.texcoord1;
 		o.custompack2.xyzw = customInputData.mass;
-
-		orb_vert(v);
 
 		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 		float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
@@ -921,13 +924,14 @@ struct v2f_surf {
 v2f_surf vert_surf (appdata_full v) {
   v2f_surf o;
   UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
+
+  orb_vert(v);
+
   Input customInputData;
   vert (v, customInputData);
   o.custompack0.xyzw = customInputData.texcoord;
   o.custompack1.xyzw = customInputData.texcoord1;
   o.custompack2.xyzw = customInputData.mass;
-
-  orb_vert(v);
 
   float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
   fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
