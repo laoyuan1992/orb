@@ -7,6 +7,8 @@ public class Orb : MonoBehaviour {
 
 	public Light _light;
 
+	public float speed = 1f;
+
 	public float minFreq = 0.31f;
 	public float maxFreq = 6f;
 	public float freqPeriod = 25f;
@@ -46,7 +48,7 @@ public class Orb : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-//		offset += speed * Time.deltaTime;
+		offset += speed * Time.deltaTime;
 //		freq = (minFreq + maxFreq) / 2 - Mathf.Cos(Time.time * 2 * Mathf.PI / freqPeriod) * (maxFreq - minFreq) / 2;
 //		float curve = 90 * Mathf.Sin(Time.time * 2 * Mathf.PI / curvePeriod);
 		mat.SetFloat("_NoiseOffset", offset);
