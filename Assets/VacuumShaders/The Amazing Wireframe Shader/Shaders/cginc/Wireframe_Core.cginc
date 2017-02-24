@@ -110,7 +110,7 @@ inline half ExtructWireframeFromMass(half3 mass, float fixedSize)
 	#endif
 }
  
-inline half WireOpaque(fixed4 wireTexColor, inout fixed4 srcColor, fixed3 mass, float wireFade, float fixedSize, half maskValue, out float3 emission)
+inline half WireOpaque(fixed4 wireTexColor, inout fixed4 srcColor, fixed3 mass, float wireFade, float fixedSize, half maskValue, float crossfade, out float3 emission)
 {
 	half value = ExtructWireframeFromMass(mass, fixedSize);
 	
@@ -129,11 +129,11 @@ inline half WireOpaque(fixed4 wireTexColor, inout fixed4 srcColor, fixed3 mass, 
 
 	float wireColorAlpha = _V_WIRE_Color.a * lerp(1, saturate(wireFade), _V_WIRE_DistanceFade);
 
-	srcColor = lerp(lerp(srcColor, _V_WIRE_Color * wireTexColor, wireColorAlpha), srcColor, value);
+	srcColor = lerp(lerp(srcColor, lerp(_V_WIRE_Color, wireTexColor, crossfade), wireColorAlpha), srcColor, value);
 
 		
 
-	emission = wireTexColor.rgb * _V_WIRE_Color.rgb * (1 - value) * wireColorAlpha * EMISSION_STRENGTH
+	emission = lerp(_V_WIRE_Color.rgb, wireTexColor.rgb, crossfade) * (1 - value) * wireColorAlpha * EMISSION_STRENGTH
 	
 
 	return value;
@@ -261,11 +261,11 @@ inline half V_WIRE_DynamicMask(half3 maskPos)
 
 
 #if defined(V_WIRE_CUTOUT)
-#define DoWire(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,customAlpha,cutoff,emission) WirCutout(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,customAlpha,cutoff,emission)
+#define DoWire(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,customAlpha,cutoff,crossfade,emission) WirCutout(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,customAlpha,cutoff,emission)
 #elif defined(V_WIRE_TRANSPARENT)
-#define DoWire(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,emission) WireTransparent(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,emission)
+#define DoWire(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,crossfade,emission) WireTransparent(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,emission)
 #else
-#define DoWire(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,emission) WireOpaque(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,emission)
+#define DoWire(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,crossfade,emission) WireOpaque(wireTexColor,srcColor,mass,wireFade,fixedsize,maskValue,crossfade,emission)
 #endif
 
 #endif

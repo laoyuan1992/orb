@@ -58,6 +58,8 @@ Shader "Custom/OrbShader"
 		[V_WIRE_UVScroll] _V_WIRE_WireTex_Scroll("    ", vector) = (0, 0, 0, 0)
 		[Enum(UV0,0,UV1,1)] _V_WIRE_WireTex_UVSet("    UV Set", float) = 0
 
+		_Crossfade("Texture Crossfade", Range(0, 1)) = 0
+
 		//Emission
 		[V_WIRE_PositiveFloat] _V_WIRE_EmissionStrength("Emission Strength", float) = 0
 		[V_WIRE_DynamicGI]	   _V_WIRE_DynamicGIEnumID ("", Float) = 0 
@@ -234,7 +236,7 @@ Shader "Custom/OrbShader"
 	 
 
 #include "Assets/VacuumShaders/The Amazing Wireframe Shader/Shaders/cginc/Wireframe_GS.cginc"
-#include "Assets/Shaders/OrbVertexModifier.cginc"
+#include "Assets/Orb/Shaders/OrbVertexModifier.cginc"
 	 
 	// vertex shader
 	v2f_surf vert_surf(appdata_full v) {
@@ -481,7 +483,7 @@ Shader "Custom/OrbShader"
 
 
 #include "Assets/VacuumShaders/The Amazing Wireframe Shader/Shaders/cginc/Wireframe_GS.cginc"
-#include "Assets/Shaders/OrbVertexModifier.cginc"
+#include "Assets/Orb/Shaders/OrbVertexModifier.cginc"
 	
 	// vertex shader
 	v2f_surf vert_surf(appdata_full v) {
@@ -680,7 +682,7 @@ Shader "Custom/OrbShader"
 
 
 #include "Assets/VacuumShaders/The Amazing Wireframe Shader/Shaders/cginc/Wireframe_GS.cginc"
-#include "Assets/Shaders/OrbVertexModifier.cginc"
+#include "Assets/Orb/Shaders/OrbVertexModifier.cginc"
 
 	// vertex shader
 	v2f_surf vert_surf(appdata_full v) {
@@ -906,7 +908,7 @@ CGPROGRAM
 		#include "Assets/VacuumShaders/The Amazing Wireframe Shader/Shaders/cginc/Wireframe_PBR.cginc" 
 		
 #include "UnityMetaPass.cginc"
-#include "Assets/Shaders/OrbVertexModifier.cginc"
+#include "Assets/Orb/Shaders/OrbVertexModifier.cginc"
 
 // vertex-to-fragment interpolation data
 struct v2f_surf {

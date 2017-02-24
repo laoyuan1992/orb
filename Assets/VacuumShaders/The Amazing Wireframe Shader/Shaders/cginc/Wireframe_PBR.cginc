@@ -17,6 +17,8 @@ sampler2D _MainTex;
 half4 _MainTex_ST;
 half2 _V_WIRE_MainTex_Scroll;
 
+float _Crossfade;
+
 half _Glossiness;
 half _Metallic;
 
@@ -100,7 +102,7 @@ void surf (Input IN, inout SurfaceOutputStandard o)
 	#elif defined(V_WIRE_NO_COLOR_WHITE)
 		fixed4 retColor = 1;
 	#else
-		fixed4 retColor = mainTex * _Color;
+		fixed4 retColor = lerp(_Color, mainTex, _Crossfade);
 	#endif	
 
 	retColor.rgb *= lerp(1, IN.color.rgb, _V_WIRE_VertexColor);
@@ -198,7 +200,7 @@ void surf (Input IN, inout SurfaceOutputStandard o)
 
 				float fixedSize = distance(_WorldSpaceCameraPos, IN.worldPos);
 
-				half clipValue = DoWire(wireTexColor, retColor, IN.mass, saturate(IN.texcoord1.z), fixedSize, dynamicMask, customAlpha, _Cutoff, wireEmission);
+				half clipValue = DoWire(wireTexColor, retColor, IN.mass, saturate(IN.texcoord1.z), fixedSize, dynamicMask, customAlpha, _Cutoff, _Crossfade, wireEmission);
 
 
 				#ifdef V_WIRE_CUTOUT_HALF
@@ -233,7 +235,7 @@ void surf (Input IN, inout SurfaceOutputStandard o)
 
 				float fixedSize = distance(_WorldSpaceCameraPos, IN.worldPos);
 
-				half value = DoWire(wireTexColor, retColor, IN.mass, saturate(IN.texcoord1.z), fixedSize, dynamicMask, wireEmission);
+				half value = DoWire(wireTexColor, retColor, IN.mass, saturate(IN.texcoord1.z), fixedSize, dynamicMask, _Crossfade, wireEmission);
 
 
 				#ifdef V_WIRE_DYNAMIC_MASK_ON
@@ -297,7 +299,7 @@ void WireFinalColor (Input IN, SurfaceOutputStandard o, inout fixed4 color)
 			
 			float fixedSize = distance(_WorldSpaceCameraPos, IN.worldPos);
 
-			half clipValue = DoWire(wireTexColor, color, IN.mass, saturate(IN.texcoord1.z), fixedSize, dynamicMask, customAlpha, _Cutoff, wireEmission);
+			half clipValue = DoWire(wireTexColor, color, IN.mass, saturate(IN.texcoord1.z), fixedSize, dynamicMask, customAlpha, _Cutoff, _Crossfade, wireEmission);
 
 
 			#ifdef V_WIRE_CUTOUT_HALF
@@ -335,7 +337,7 @@ void WireFinalColor (Input IN, SurfaceOutputStandard o, inout fixed4 color)
 
 			float fixedSize = distance(_WorldSpaceCameraPos, IN.worldPos);
 
-			DoWire(wireTexColor, color, IN.mass, saturate(IN.texcoord1.z), fixedSize, dynamicMask, wireEmission);
+			DoWire(wireTexColor, color, IN.mass, saturate(IN.texcoord1.z), fixedSize, dynamicMask, _Crossfade, wireEmission);
 		#endif
 
 		color.rgb += wireEmission;

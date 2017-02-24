@@ -5,7 +5,7 @@ float _BaseRadius;
 float _RadiusCurve;
 float4 _OrbRotation;
 
-#include "Assets/Shaders/SimplexNoise3D.cginc"
+#include "Assets/Orb/Shaders/SimplexNoise3D.cginc"
 
 // Quaternion multiplication
 // http://mathworld.wolfram.com/Quaternion.html
@@ -22,7 +22,7 @@ float4 quat_conj(float4 q)
 	return float4(-q.x, -q.y, -q.z, q.w); 
 }
 
-float4 qinv(float q)
+float4 qinv(float4 q)
 {
 	float4 inv = quat_conj(q);
 	inv /= dot(q, q);
@@ -43,7 +43,7 @@ float3 rotate_point(float3 position, float4 qr)
 void orb_vert(inout appdata_full v) {
 	fixed3 dir = normalize(v.vertex.xyz);
 	fixed r = _BaseRadius;
-	fixed3 no = fixed3(0, 0, _NoiseOffset);
+	fixed3 no = fixed3(0, 0, -_NoiseOffset);
 	fixed rad = _BaseRadius + _NoiseMagnitude * 0.5 + _NoiseMagnitude * snoise(dir * _NoiseFrequency + no);
 
 	v.vertex.xyz = dir * rad;
