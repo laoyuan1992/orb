@@ -180,7 +180,7 @@ public class Orb : MonoBehaviour {
 
 		mat.SetFloat("_Crossfade", _textureCrossfade);
 
-		mat.SetFloat("_Glossiness", _smoothness);
+		mat.SetFloat("_Glossiness", Mathf.Lerp(_smoothness, 1f, _textureCrossfade * 2));
 		mat.SetFloat("_Metallic", _metallic);
 	}
 }
