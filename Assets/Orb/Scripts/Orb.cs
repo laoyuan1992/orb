@@ -128,6 +128,18 @@ public class Orb : MonoBehaviour {
 		set { _translateZ = value; UpdateTranslate(); }
 	}
 
+	private float _smoothness = 0.5f;
+	public float smoothness {
+		get { return _smoothness; }
+		set { _smoothness = value; }
+	}
+
+	private float _metallic = 0.0f;
+	public float metallic {
+		get { return _metallic; }
+		set { _metallic = value; }
+	}
+
 	private float offset = 0f;
 	private Material mat;
 
@@ -167,5 +179,8 @@ public class Orb : MonoBehaviour {
 		mat.SetVector("_OrbRotation", new Vector4(orb_rotation.x, orb_rotation.y, orb_rotation.z, orb_rotation.w));
 
 		mat.SetFloat("_Crossfade", _textureCrossfade);
+
+		mat.SetFloat("_Glossiness", _smoothness);
+		mat.SetFloat("_Metallic", _metallic);
 	}
 }
