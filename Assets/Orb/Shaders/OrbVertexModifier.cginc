@@ -66,7 +66,7 @@ void orb_vert(inout appdata_full v) {
 	v.normal.xyz = rotate_point(v.normal.xyz, _OrbRotation);
 	v.tangent.xyz = rotate_point(v.tangent.xyz, _OrbRotation);
 
-	float phi = 3.1415926535 * _RadiusCurve / 180 * rad / r;
+	float phi = 3.1415926535 * _RadiusCurve / 180 * (rad - r) / r;
 	fixed3x3 rot = fixed3x3(
 		cos(phi), -sin(phi), 0,
 		sin(phi), cos(phi), 0,
