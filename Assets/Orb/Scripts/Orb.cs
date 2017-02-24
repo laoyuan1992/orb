@@ -140,10 +140,23 @@ public class Orb : MonoBehaviour {
 		set { _metallic = value; }
 	}
 
+	private float _wireframeAlpha = 1f;
+	public float wireframeAlpha {
+		get { return _wireframeAlpha; }
+		set { _wireframeAlpha = value; }
+	}
+
+	private float _albedo = 0.23f;
+	public float albedo {
+		get { return _albedo; }
+		set { _albedo = value; }
+	}
+
 	private float offset = 0f;
 	private Material mat;
 
 	private Color lightColor;
+	private Color albedoColor;
 
 	private Quaternion orb_rotation = Quaternion.identity;
 
@@ -173,7 +186,12 @@ public class Orb : MonoBehaviour {
 
 		lightColor = Color.HSVToRGB(_lightHue, _lightSat * (1f - _textureCrossfade), _lightBright);
 		_light.color = lightColor;
+		lightColor.a = _wireframeAlpha;
 		mat.SetColor("_V_WIRE_Color", lightColor);
+
+		float lerpAlbedo = Mathf.Lerp(0.8f, _albedo, _wireframeAlpha);
+		albedoColor = new Color(lerpAlbedo, lerpAlbedo, lerpAlbedo);
+		mat.SetColor("_Color", albedoColor);
 
 		orb_rotation = Quaternion.Euler(new Vector3(_rotationX, _rotationY, _rotationZ) * Time.deltaTime) * orb_rotation;
 		mat.SetVector("_OrbRotation", new Vector4(orb_rotation.x, orb_rotation.y, orb_rotation.z, orb_rotation.w));
