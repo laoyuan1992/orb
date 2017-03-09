@@ -37,6 +37,7 @@ public class OSCKnobControl : MonoBehaviour {
 			var val = (float)data[0];
 			_knob.value = val;
 		}
+		OscMaster.ClearData(_path);
 	}
 	
 	private void Listener(float newValue) {

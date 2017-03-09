@@ -152,6 +152,12 @@ public class Orb : MonoBehaviour {
 		set { _albedo = value; }
 	}
 
+	private Texture _texture = null;
+	public Texture texture {
+		get { return _texture; }
+		set { StopMovie(); _texture = value; UpdateTexture(); }
+	}
+
 	private float offset = 0f;
 	private Material mat;
 
@@ -172,6 +178,32 @@ public class Orb : MonoBehaviour {
 
 	void UpdateTranslate() {
 		transform.position = new Vector3(_translateX, _translateY, _translateZ);
+	}
+
+	void StopMovie() {
+		if (_texture is MovieTexture) {
+			MovieTexture movie = _texture as MovieTexture;
+			if (movie.isPlaying) {
+				movie.Stop();
+			}
+		}
+	}
+
+	void UpdateTexture() {
+		if (!mat)
+			return;
+
+		mat.SetTexture("_MainTex", _texture);
+		mat.SetTexture("_V_WIRE_WireTex", _texture);
+
+		if (_texture is MovieTexture) {
+			MovieTexture movie = _texture as MovieTexture;
+			movie.loop = true;
+			if (movie.isPlaying) {
+				movie.Stop();
+			}
+			movie.Play();
+		}
 	}
 	
 	// Update is called once per frame
